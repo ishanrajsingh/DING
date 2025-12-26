@@ -58,7 +58,7 @@ If you've ever wondered _“What actually happens when I run `git commit`?”_, 
 
 ## Getting Started
 
-Before starting - check out our [CONTRIBUTING.md](https://github.com/DING/blob/main/CONTRIBUTING.md) to get a refresher on contribution and general workflow.
+Before starting - check out our [CONTRIBUTING.md](https://github.com/opencodeiiita/DING/blob/main/CONTRIBUTING.md) to get a refresher on contribution and general workflow.
 
 ---
 

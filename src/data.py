@@ -1,11 +1,5 @@
 import os
 import hashlib
-import time
-try:
-    import zstd
-except ImportError:
-    zstd = None
-
 
 DING_DIR = ".ding"
 
@@ -50,28 +44,16 @@ def repo_path():
     return None
 
 
-
-def compress_zstd(data):
-    if not zstd:
-        raise RuntimeError("zstd not installed")
-    return zstd.ZSTD_compress(data, 6)
-
-
-
-ALGORITHMS = {}
-if zstd:
-    ALGORITHMS["zstd"] = compress_zstd
-
-
 def hash_objects(args):
     repo = repo_path()
     if repo is None:
         print("error: not inside a ding repository")
         return
-
     ding_path = os.path.join(repo, DING_DIR)
+
     objects_path = os.path.join(ding_path, "objects")
-    os.makedirs(objects_path, exist_ok=True)
+    if not os.path.exists(objects_path):
+        os.mkdir(objects_path)
 
     filename = args.file
     try:
@@ -82,15 +64,7 @@ def hash_objects(args):
         return
 
     oid = hashlib.sha256(content).hexdigest()
-
-    if not zstd:
-        print("zstd compression is not available.")
-        return
-
-    compressed = compress_zstd(content)
-    obj_name = oid
-    obj_path = os.path.join(objects_path, obj_name)
-
-    with open(obj_path, "wb") as f:
-        f.write(compressed)
-
+    print(oid)
+    object_file_path = os.path.join(objects_path, oid)
+    with open(object_file_path, "wb") as f:
+        f.write(content)

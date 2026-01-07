@@ -1,6 +1,7 @@
 import os
 import hashlib
 import compression.zstd
+import sys
 
 
 DING_DIR = ".ding"
@@ -118,4 +119,4 @@ def decompress(search_hash):
     full_path = os.path.join(objects_path, hash)
     with compression.zstd.open(full_path, "rb") as f:
         read_data = f.read()
-    print(read_data.decode('utf-8'))
+    sys.stdout.buffer.write(read_data)
